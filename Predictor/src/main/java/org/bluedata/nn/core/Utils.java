@@ -3,6 +3,7 @@ package org.bluedata.nn.core;
 
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.MalformedURLException;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
@@ -23,35 +24,41 @@ public class Utils {
         log.info("Save Model");
         boolean saveUpdater = true;
 
-      /*  URL url = new URL(path);
+        URL url = new URL(path);
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
-        OutputStream out = connection.getOutputStream();*/
+        OutputStream out = connection.getOutputStream();
 
-        OutputStream out = new FileOutputStream(new File(path));
+      //  OutputStream out = new FileOutputStream(new File(path));
         ModelSerializer.writeModel( model, out, saveUpdater);
         out.close();
     }
 
 
-    public static MultiLayerNetwork loadModel(String url, boolean loadUpdater) throws Exception {
+    public static MultiLayerNetwork loadModel(String path, boolean loadUpdater) throws Exception {
 
-        try ( InputStream inputStream = (new URL(url)).openStream() ) {
+        try ( InputStream inputStream = (new URL(path)).openStream() ) {
             return ModelSerializer.restoreMultiLayerNetwork( inputStream, loadUpdater);
 
         } catch(MalformedURLException e) {
-            log.error("Malformed deepLearning URL '{}'", url);
+            log.error("Malformed deepLearning URL '{}'", path);
         } catch (IOException e) {
-            log.error("Unable to read DeepLearning Model '{}'", url);
+            log.error("Unable to read DeepLearning Model '{}'", path);
         }
-        throw new Exception( "Unable to load Model " + url);
+        throw new Exception( "Unable to load Model " + path);
     }
 
 
     public static void saveNormalizer( DataNormalization normalizer, String path) throws IOException {
 
         log.info("Save Normalizer");
-        OutputStream out = new FileOutputStream(new File(path));
+        
+        URL url = new URL(path);
+        URLConnection connection = url.openConnection();
+        connection.setDoOutput(true);
+        OutputStream out = connection.getOutputStream();
+        
+       // OutputStream out = new FileOutputStream(new File(path));
         NormalizerSerializer serializer = NormalizerSerializer.getDefault();
         serializer.write(normalizer, out);
     }

@@ -24,7 +24,7 @@ public class MultiLayerNNPredictor {
     private Boolean loadUpdater;
     private String normalizerUrl;
     private Boolean isRevertLabel;
-    public MultiLayerNetwork model;
+    private MultiLayerNetwork model;
     private DataNormalization normalizer;
     private List<Integer> rnnIndexLayers;
    // private Map<String, Map<Integer,Map<String,INDArray>>> stateStores = new HashMap<>();

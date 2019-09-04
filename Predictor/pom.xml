@@ -45,6 +45,10 @@
       <aws.sdk.version>1.11.109</aws.sdk.version>
       <jackson.version>2.5.1</jackson.version>
       <scala.plugin.version>3.2.2</scala.plugin.version>
+      
+      <jpmml.version>1.4.8</jpmml.version>
+      <tensorflow.version>1.13.1</tensorflow.version>
+      <xgboost4j.version>0.82</xgboost4j.version>
   </properties>
   
   
@@ -84,6 +88,30 @@
   		<artifactId>log4j-core</artifactId>
   		<version>${log4j.version}</version>
   	</dependency>
+  	
+    <dependency>
+	    <groupId>ml.dmlc</groupId>
+	    <artifactId>xgboost4j</artifactId>
+	    <version>${xgboost4j.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.jpmml</groupId>
+		<artifactId>pmml-evaluator</artifactId>
+		<version>${jpmml.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.jpmml</groupId>
+		<artifactId>pmml-evaluator-extension</artifactId>
+		<version>${jpmml.version}</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>org.tensorflow</groupId>
+	  <artifactId>tensorflow</artifactId>
+	  <version>${tensorflow.version}</version>
+	</dependency>
+  	
   	
   	
   	
