@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 public class SequencePairReaderImpl implements SequencePairReader {
 
     private static final Logger log = LoggerFactory.getLogger(SequencePairReaderImpl.class);
+    
     private int pastLength;
     private int predictLength;
     private int window;

@@ -21,32 +21,37 @@ public class MultiLayerNNPredictor {
     private static final Logger log = LoggerFactory.getLogger(MultiLayerNNPredictor.class);
 
     private String modelUrl;
+    private String stateStore;
+    private String stateTable;
     private Boolean loadUpdater;
     private String normalizerUrl;
     private Boolean isRevertLabel;
     private MultiLayerNetwork model;
     private DataNormalization normalizer;
     private List<Integer> rnnIndexLayers;
-   // private Map<String, Map<Integer,Map<String,INDArray>>> stateStores = new HashMap<>();
-    
-    
-    private org.bluedata.datastore.ObjectStore stateStores = new CassandraObjectStore.Builder()
-            .with("ContactPoints", "127.0.0.1")
-            .with("TableName","NeuralNET.objectStore")
-            .build();
+    private org.bluedata.datastore.ObjectStore stateStores;
+
 
 
     public void init(Map<String,Object> data) {
 
         try {
             this.modelUrl = (String) data.get(Utils.ATTR_MODEL_PATH);
+            this.stateStore =  (String) data.get(Utils.ATTR_STATE_STORE);
+            this.stateTable =  (String) data.get(Utils.ATTR_STATE_TABLE);
             this.normalizerUrl = (String) data.get(Utils.ATTR_NORMALIZER_PATH);
             this.loadUpdater = (Boolean) data.getOrDefault(Utils.ATTR_LOAD_UPDATER, DEFAULT_LOADUPDATER);
+            
 
             this.model = Utils.loadModel(modelUrl, loadUpdater);
             this.normalizer = ( !"".equals(normalizerUrl) ) ? Utils.loadNormalizer(normalizerUrl) : null;
             this.isRevertLabel = (normalizer != null && normalizer.isFitLabel()) ? true : false;
             this.rnnIndexLayers = getRnnIndexLayers(model);
+            
+            this.stateStores = new CassandraObjectStore.Builder()
+            	.with("ContactPoints", this.stateStore)
+            	.with("TableName", this.stateTable)
+                .build();
 
         } catch( Exception e) {
             log.error( "Predictor: %s" , e );
@@ -90,7 +95,7 @@ public class MultiLayerNNPredictor {
     }
 
 
-    private void  restoreState(String uuid)  throws Exception {
+    private void restoreState(String uuid)  throws Exception {
 
         Map<Integer,Map<String,INDArray>> state = stateStores.get(uuid);
 

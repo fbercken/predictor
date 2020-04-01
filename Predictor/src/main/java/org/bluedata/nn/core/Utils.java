@@ -24,12 +24,12 @@ public class Utils {
         log.info("Save Model");
         boolean saveUpdater = true;
 
-        URL url = new URL(path);
-        URLConnection connection = url.openConnection();
-        connection.setDoOutput(true);
-        OutputStream out = connection.getOutputStream();
+     //   URL url = new URL(path);
+     //   URLConnection connection = url.openConnection();
+     //   connection.setDoOutput(true);
+     //   OutputStream out = connection.getOutputStream();
 
-      //  OutputStream out = new FileOutputStream(new File(path));
+        OutputStream out = new FileOutputStream(new File(path));
         ModelSerializer.writeModel( model, out, saveUpdater);
         out.close();
     }
@@ -90,4 +90,7 @@ public class Utils {
     public final static String ATTR_FRACTION_TRAIN = "fractionTrain";
     public final static String ATTR_LISTENERS = "listeners";
     public final static String ATTR_MULTILAYER = "multiLayerModel";
+    public final static String ATTR_STATE_STORE = "127.0.0.1";
+    public final static String ATTR_STATE_TABLE = "NeuralNET.objectStore";
+    
 }

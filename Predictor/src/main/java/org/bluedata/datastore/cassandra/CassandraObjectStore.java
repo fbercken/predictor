@@ -2,35 +2,35 @@ package org.bluedata.datastore.cassandra;
 
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-
 import org.bluedata.datastore.ObjectStore;
-
 import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Row;
-import com.datastax.driver.dse.DseCluster;
-import com.datastax.driver.dse.DseSession;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
 
 
 public class CassandraObjectStore extends ObjectStore  {
 
 
     private String tableName;
-    private DseCluster cluster;
-    private DseSession session;
+    private Cluster cluster;
+    private Session session;
     private PreparedStatement writeStatement;
     private PreparedStatement readStatement;
 
 
     protected CassandraObjectStore(Builder builder) {
-
-        this.cluster = DseCluster.builder()
-                .addContactPoint( (String) builder.get("addresses"))
-                .withPort( (Integer) builder.get("port"))
-                .build();
-
+    	
+        this.cluster = Cluster.builder()
+        		.addContactPoint( (String) builder.get("addresses") )
+        		.withPort( (int) builder.get("port")) 
+        		.build();
+        
         this.session = cluster.connect();
+        		
         this.tableName = (String) builder.get("tableName");
 
         session.execute(String.format(CREATE_STATEMENT,tableName));
@@ -52,7 +52,7 @@ public class CassandraObjectStore extends ObjectStore  {
 
     public <V> V get(String id) throws Exception {
 
-        BoundStatement bound = readStatement.bind(id);
+    	BoundStatement bound = readStatement.bind(id);
         Row row = session.execute(bound).one();
         if ( row == null ) {
             return null;
@@ -79,6 +79,7 @@ public class CassandraObjectStore extends ObjectStore  {
         }
 
     }
+
 
 
     public static String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS %s (id text, data blob, PRIMARY KEY(id))";

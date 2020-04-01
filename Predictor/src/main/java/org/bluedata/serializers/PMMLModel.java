@@ -6,7 +6,6 @@ import java.util.List;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import org.dmg.pmml.FieldName;
@@ -20,7 +19,6 @@ import org.jpmml.model.PMMLUtil;
 import org.xml.sax.SAXException;
 import org.bluedata.nn.core.Model;
 import org.bluedata.nn.core.ModelFactory;
-
 import javax.xml.bind.JAXBException;
 
 
@@ -29,7 +27,6 @@ public class PMMLModel implements Model {
 
 	private final Evaluator evaluator;
 	private final ModelEvaluatorBuilder evaluatorBuilder;
-	
 	private List<InputField> inputFields;
 	private List<TargetField> targetFields;	
 	//private List<OutputField> outputFields;

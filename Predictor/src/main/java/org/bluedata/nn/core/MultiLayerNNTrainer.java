@@ -106,7 +106,7 @@ public class MultiLayerNNTrainer {
             if ( modelPath != null ) Utils.saveModel( model, modelPath);
             if ( normalizer != null && normalizerPath != null) Utils.saveNormalizer(normalizer, normalizerPath);
         } catch( IOException e) {
-            log.error("Unable to save NN model");
+            log.error("Unable to save NN model", e);
         }
     }
 
