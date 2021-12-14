@@ -26,7 +26,7 @@
       <datavec.version>1.0.0-beta3</datavec.version>
       <arbiter.version>1.0.0-beta3</arbiter.version>
       <rl4j.version>1.0.0-beta3</rl4j.version>
-      <log4j.version>2.6.2</log4j.version>
+      <log4j.version>2.16.0</log4j.version>
       <cassandra.version>1.8.2</cassandra.version>
 
       <!-- For Spark examples: change the _1 to _2 to switch between Spark 1 and Spark 2 -->
